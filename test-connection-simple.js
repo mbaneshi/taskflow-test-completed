@@ -147,7 +147,7 @@ async function runTests() {
   await testDatabase();
   
   console.log('\n🎯 Connection Test Summary:');
-  console.log('   - Backend should be running on port 5000');
+  console.log('   - Backend should be running on port 5001');
   console.log('   - Frontend should be running on port 3000');
   console.log('   - Database should be accessible via backend');
   console.log('   - Caddy proxy should route traffic correctly');

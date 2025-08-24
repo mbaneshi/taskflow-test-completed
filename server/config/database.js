@@ -12,7 +12,7 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/taskflow';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://admin:taskflow123@localhost:27017/taskflow?authSource=admin';
     
     const options = {
       maxPoolSize: 10,
