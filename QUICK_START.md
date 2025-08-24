@@ -51,7 +51,7 @@ npm run test:connection
 | Service | URL | Port | Status |
 |---------|-----|------|--------|
 | **Frontend** | http://localhost:3000 | 3000 | ✅ Fixed |
-| **Backend API** | http://localhost:5000 | 5000 | ✅ Fixed |
+| **Backend API** | http://localhost:5001 | 5001 | ✅ Fixed |
 | **Database** | mongodb://localhost:27017 | 27017 | ✅ Fixed |
 | **Caddy Proxy** | http://localhost:80 | 80 | ✅ Fixed |
 
@@ -91,7 +91,7 @@ npm run test:e2e        # End-to-end tests
 ### **Port Already in Use**
 ```bash
 # Check what's using the port
-lsof -i :5000
+lsof -i :5001
 lsof -i :3000
 
 # Kill process if needed

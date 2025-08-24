@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   # MongoDB Database
@@ -53,12 +53,12 @@ services:
       MONGODB_URI: mongodb://admin:taskflow123@mongodb:27017/taskflow?authSource=admin
       REDIS_URL: redis://redis:6379
       JWT_SECRET: your-super-secret-jwt-key-change-in-production
-      PORT: 5000
+      PORT: 5001
     volumes:
       - ./server/uploads:/app/uploads
       - ./server/logs:/app/logs
     ports:
-      - "5000:5000"
+      - "5001:5001"
     depends_on:
       mongodb:
         condition: service_healthy
@@ -82,7 +82,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - API_URL=http://backend:5000
+      - API_URL=http://backend:5001
     depends_on:
       - backend
     networks:

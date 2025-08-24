@@ -5,7 +5,8 @@
  * Tests backend, frontend, and database connectivity
  */
 
-import fetch from 'node-fetch';
+// Use dynamic import for better compatibility
+let fetch;
 
 const config = {
   backend: 'http://localhost:5000',
@@ -112,5 +113,14 @@ async function runTests() {
   console.log('   - Caddy proxy should route traffic correctly');
 }
 
-// Run tests
-runTests().catch(console.error);
+// Initialize fetch and run tests
+(async () => {
+  try {
+    const { default: fetchModule } = await import('node-fetch');
+    fetch = fetchModule;
+    await runTests();
+  } catch (error) {
+    console.error('❌ Failed to load fetch module:', error.message);
+    console.log('💡 Try installing node-fetch: npm install node-fetch');
+  }
+})();
