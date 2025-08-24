@@ -20,7 +20,12 @@
     "test:frontend": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=src",
     "test:unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=unit",
     "test:integration": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=integration",
-    "test:e2e": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=e2e"
+    "test:e2e": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=e2e",
+    "test:comprehensive": "node run-comprehensive-tests.js",
+    "test:performance": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=performance",
+    "test:security": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=security",
+    "test:accessibility": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=accessibility",
+    "test:all": "npm run test:comprehensive"
   },
   "dependencies": {
     "@dnd-kit/accessibility": "^3.1.1",
@@ -59,6 +64,8 @@
     "ws": "^8.14.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
     "@eslint/js": "^9.21.0",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^14.3.1",
