@@ -19,6 +19,9 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 // Create the authentication context
 const AuthContext = createContext();
 
+// Export the context for use in tests
+export { AuthContext };
+
 /**
  * Custom hook to use the authentication context
  * @returns {Object} Authentication context values and methods
