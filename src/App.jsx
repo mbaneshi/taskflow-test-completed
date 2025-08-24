@@ -42,6 +42,18 @@ import ProfilePage from "./pages/UserPages/ProfilePage";
 // Feature Components
 import TaskFilter from "./components/tasks/TaskFilter";
 
+// PWA Components
+import PWAInstaller from "./components/common/PWAInstaller";
+
+// Collaboration Components
+import RealTimeCollaboration from "./components/collaboration/RealTimeCollaboration";
+
+// Analytics Components
+import AnalyticsDashboard from "./components/analytics/AnalyticsDashboard";
+
+// Security Components
+import TwoFactorAuth from "./components/auth/TwoFactorAuth";
+
 // Context Providers
 import AuthProvider from "./contexts/AuthContext";
 import NotificationProvider from "./contexts/NotificationContext";
@@ -214,6 +226,22 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
+                <Route 
+                  path="/user/analytics" 
+                  element={
+                    <ProtectedRoute>
+                      <AnalyticsDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/user/2fa" 
+                  element={
+                    <ProtectedRoute>
+                      <TwoFactorAuth />
+                    </ProtectedRoute>
+                  } 
+                />
                 
                 {/* Fallback Route - Redirect to landing page */}
                 <Route path="*" element={<Navigate to="/" replace />} />
@@ -221,6 +249,8 @@ function App() {
             </main>
             
             <Footer />
+            <PWAInstaller />
+            <RealTimeCollaboration />
           </div>
         </Router>
       </NotificationProvider>

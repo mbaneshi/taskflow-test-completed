@@ -14,6 +14,8 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { createServer } from 'http';
+import WebSocketServer from './websocket.js';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -32,6 +34,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+const server = createServer(app);
 const PORT = process.env.PORT || 5000;
 
 // Middleware
@@ -83,11 +86,15 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Initialize WebSocket server
+const wss = new WebSocketServer(server);
+
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`🚀 TaskFlow server running on port ${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🗄️  Database: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Connecting...'}`);
+  console.log(`🔌 WebSocket server initialized`);
 });
 
 export default app;
