@@ -8,6 +8,9 @@
     "server": "node server/src/index.js",
     "client": "vite --host",
     "build": "vite build",
+    "build:server": "echo 'Server build completed'",
+    "vercel-build": "npm run build && npm run build:server",
+    "start": "node server/src/index.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
@@ -79,5 +82,8 @@
     "vite-plugin-checker": "0.9.3",
     "vite-plugin-dts": "4.5.4",
     "vite-plugin-inspect": "11.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
