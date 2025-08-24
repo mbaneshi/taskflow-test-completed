@@ -1,0 +1,188 @@
+{
+  "timestamp": "2025-08-24T05:31:58.305Z",
+  "duration": 31116,
+  "testResults": {
+    "unit": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "integration": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "e2e": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "performance": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "security": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "accessibility": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "components": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "models": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "utils": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "hooks": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "contexts": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "routes": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "controllers": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "database": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "middleware": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "websocket": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "auth": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "tasks": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "admin": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "collaboration": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "load": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "memory": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "response": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "validation": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "injection": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "xss": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "aria": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "keyboard": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    },
+    "screenreader": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 0
+    }
+  },
+  "coverage": {},
+  "summary": {
+    "totalTests": 0,
+    "totalPassed": 0,
+    "totalFailed": 0,
+    "passRate": "0%",
+    "status": "PASSED"
+  }
+}
