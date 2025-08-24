@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../common/Button';
+import Button from '../common/Button';
 
 const BulkOperations = ({ tasks, onBulkUpdate, onBulkDelete, onBulkAssign }) => {
   const { user } = useAuth();

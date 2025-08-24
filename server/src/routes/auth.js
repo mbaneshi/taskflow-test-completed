@@ -57,7 +57,7 @@ router.post('/register', async (req, res) => {
       username,
       email: email.toLowerCase(),
       password,
-      role: role === 'admin' ? 'user' // Prevent admin registration through API
+      role: role === 'admin' ? 'user' : 'user' // Prevent admin registration through API
     });
     
     await user.save();

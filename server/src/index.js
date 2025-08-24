@@ -45,14 +45,11 @@ app.use(express.urlencoded({ extended: true }));
 // Static files (for production)
 app.use(express.static(join(__dirname, '../../dist')));
 
+// Import database configuration
+import connectDB from './config/database.js';
+
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskflow')
-  .then(() => {
-    console.log('✅ Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('❌ MongoDB connection error:', error);
-  });
+connectDB();
 
 // Logging middleware for all requests
 app.use(logUserActivity);

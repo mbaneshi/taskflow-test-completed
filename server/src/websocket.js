@@ -1,11 +1,11 @@
-import WebSocket from 'ws';
+import { WebSocketServer as WSServer } from 'ws';
 import jwt from 'jsonwebtoken';
 import User from './models/User.js';
 import Task from './models/Task.js';
 
 class WebSocketServer {
   constructor(server) {
-    this.wss = new WebSocket.Server({ server });
+    this.wss = new WSServer({ server });
     this.clients = new Map(); // Map to store client connections
     this.rooms = new Map(); // Map to store room members
     

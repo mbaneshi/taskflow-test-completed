@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../common/Button';
+import Button from '../common/Button';
 
 const AdvancedAnalytics = () => {
   const { user } = useAuth();
@@ -145,7 +145,7 @@ const AdvancedAnalytics = () => {
           }
         }}
       >
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex justify-between items-center mb-2">
           <h3 className="font-semibold text-gray-900">{data.label}</h3>
           <div className={`w-4 h-4 rounded-full border-2 ${
             isSelected ? `border-${data.color}-500 bg-${data.color}-500` : 'border-gray-300'
@@ -153,7 +153,7 @@ const AdvancedAnalytics = () => {
             {isSelected && <div className="w-2 h-2 bg-white rounded-full m-auto mt-0.5"></div>}
           </div>
         </div>
-        <div className="text-2xl font-bold text-gray-900 mb-1">{data.value}</div>
+        <div className="mb-1 text-2xl font-bold text-gray-900">{data.value}</div>
         <div className={`flex items-center text-sm ${
           data.trend === 'up' ? 'text-green-600' : data.trend === 'down' ? 'text-red-600' : 'text-gray-600'
         }`}>
@@ -172,19 +172,19 @@ const AdvancedAnalytics = () => {
     const maxValue = Math.max(...data);
     
     return (
-      <div className="bg-white p-4 rounded-lg border border-gray-200">
-        <h4 className="font-semibold text-gray-900 mb-4">
+      <div className="p-4 bg-white rounded-lg border border-gray-200">
+        <h4 className="mb-4 font-semibold text-gray-900">
           {metricOptions.find(m => m.value === metric)?.label}
         </h4>
-        <div className="flex items-end justify-between h-32 space-x-1">
+        <div className="flex justify-between items-end space-x-1 h-32">
           {data.map((value, index) => (
-            <div key={index} className="flex-1 flex flex-col items-center">
+            <div key={index} className="flex flex-col flex-1 items-center">
               <div
                 className="w-full bg-blue-500 rounded-t transition-all duration-300 hover:bg-blue-600"
                 style={{ height: `${(value / maxValue) * 100}%` }}
                 title={`Day ${index + 1}: ${value}%`}
               ></div>
-              <span className="text-xs text-gray-500 mt-1">{index + 1}</span>
+              <span className="mt-1 text-xs text-gray-500">{index + 1}</span>
             </div>
           ))}
         </div>
@@ -193,10 +193,10 @@ const AdvancedAnalytics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="p-6 min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="p-6 mb-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Advanced Analytics</h1>
             <p className="text-gray-600">Comprehensive insights and custom reporting for your team</p>
@@ -205,13 +205,13 @@ const AdvancedAnalytics = () => {
           <div className="flex items-center space-x-3">
             <Button
               onClick={() => setShowCustomReport(!showCustomReport)}
-              className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg"
+              className="px-4 py-2 text-white bg-purple-500 rounded-lg hover:bg-purple-600"
             >
               🎯 Custom Report
             </Button>
             <Button
               onClick={generateReport}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+              className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
             >
               📊 Generate Report
             </Button>
@@ -219,14 +219,14 @@ const AdvancedAnalytics = () => {
         </div>
 
         {/* Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           {/* Time Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Time Range</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">Time Range</label>
             <select
               value={selectedTimeRange}
               onChange={(e) => setSelectedTimeRange(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               {timeRangeOptions.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
@@ -236,11 +236,11 @@ const AdvancedAnalytics = () => {
 
           {/* Report Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Report Type</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">Report Type</label>
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="p-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               {reportTypes.map(type => (
                 <option key={type.value} value={type.value}>{type.icon} {type.label}</option>
@@ -250,23 +250,23 @@ const AdvancedAnalytics = () => {
 
           {/* Export Options */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Export Format</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">Export Format</label>
             <div className="flex space-x-2">
               <Button
                 onClick={() => exportData('csv')}
-                className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm"
+                className="px-3 py-2 text-sm text-white bg-green-500 rounded hover:bg-green-600"
               >
                 CSV
               </Button>
               <Button
                 onClick={() => exportData('excel')}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm"
+                className="px-3 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
               >
                 Excel
               </Button>
               <Button
                 onClick={() => exportData('pdf')}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm"
+                className="px-3 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600"
               >
                 PDF
               </Button>
@@ -276,19 +276,19 @@ const AdvancedAnalytics = () => {
           {/* Custom Date Range */}
           {selectedTimeRange === 'custom' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Custom Range</label>
+              <label className="block mb-2 text-sm font-medium text-gray-700">Custom Range</label>
               <div className="flex space-x-2">
                 <input
                   type="date"
                   value={customDateRange.start}
                   onChange={(e) => setCustomDateRange({ ...customDateRange, start: e.target.value })}
-                  className="flex-1 p-2 border border-gray-300 rounded-lg text-sm"
+                  className="flex-1 p-2 text-sm rounded-lg border border-gray-300"
                 />
                 <input
                   type="date"
                   value={customDateRange.end}
                   onChange={(e) => setCustomDateRange({ ...customDateRange, end: e.target.value })}
-                  className="flex-1 p-2 border border-gray-300 rounded-lg text-sm"
+                  className="flex-1 p-2 text-sm rounded-lg border border-gray-300"
                 />
               </div>
             </div>
@@ -298,21 +298,21 @@ const AdvancedAnalytics = () => {
 
       {/* Custom Report Builder */}
       {showCustomReport && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Custom Report Builder</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="p-6 mb-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">Custom Report Builder</h2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {metricOptions.map(metric => renderMetricCard(metric.value))}
           </div>
-          <div className="mt-6 flex justify-end space-x-3">
+          <div className="flex justify-end mt-6 space-x-3">
             <Button
               onClick={() => setShowCustomReport(false)}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+              className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:bg-gray-600"
             >
               Cancel
             </Button>
             <Button
               onClick={generateReport}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+              className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
             >
               Generate Custom Report
             </Button>
@@ -321,13 +321,13 @@ const AdvancedAnalytics = () => {
       )}
 
       {/* Analytics Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
         {/* Key Metrics */}
         <div className="lg:col-span-2 xl:col-span-1">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Metrics</h3>
+          <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="mb-4 text-lg font-semibold text-gray-900">Key Metrics</h3>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+              <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
                 <div>
                   <p className="text-sm text-gray-600">Total Tasks</p>
                   <p className="text-2xl font-bold text-blue-600">{analyticsData.tasks.total}</p>
@@ -338,7 +338,7 @@ const AdvancedAnalytics = () => {
                 </div>
               </div>
               
-              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+              <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
                 <div>
                   <p className="text-sm text-gray-600">Completion Rate</p>
                   <p className="text-2xl font-bold text-green-600">
@@ -351,7 +351,7 @@ const AdvancedAnalytics = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+              <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
                 <div>
                   <p className="text-sm text-gray-600">Team Members</p>
                   <p className="text-2xl font-bold text-purple-600">{analyticsData.team.members}</p>
@@ -374,13 +374,13 @@ const AdvancedAnalytics = () => {
 
         {/* Team Performance */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Performers</h3>
+          <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="mb-4 text-lg font-semibold text-gray-900">Top Performers</h3>
             <div className="space-y-3">
               {analyticsData.team.topPerformers.map((member, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                    <div className="flex justify-center items-center w-8 h-8 text-sm font-bold text-white bg-blue-500 rounded-full">
                       {member.name.charAt(0)}
                     </div>
                     <div>
@@ -400,26 +400,26 @@ const AdvancedAnalytics = () => {
 
         {/* Time Tracking Insights */}
         <div>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Time Insights</h3>
+          <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="mb-4 text-lg font-semibold text-gray-900">Time Insights</h3>
             <div className="space-y-4">
-              <div className="text-center p-3 bg-orange-50 rounded-lg">
+              <div className="p-3 text-center bg-orange-50 rounded-lg">
                 <p className="text-2xl font-bold text-orange-600">{analyticsData.timeTracking.totalHours}h</p>
                 <p className="text-sm text-gray-600">Total Hours</p>
               </div>
               
-              <div className="text-center p-3 bg-blue-50 rounded-lg">
+              <div className="p-3 text-center bg-blue-50 rounded-lg">
                 <p className="text-2xl font-bold text-blue-600">{analyticsData.timeTracking.averagePerTask}h</p>
                 <p className="text-sm text-gray-600">Avg per Task</p>
               </div>
 
               <div className="p-3 bg-green-50 rounded-lg">
-                <p className="text-sm font-medium text-gray-900 mb-1">Most Productive</p>
+                <p className="mb-1 text-sm font-medium text-gray-900">Most Productive</p>
                 <p className="text-sm text-green-600">{analyticsData.timeTracking.mostProductiveHours}</p>
               </div>
 
               <div className="p-3 bg-red-50 rounded-lg">
-                <p className="text-sm font-medium text-gray-900 mb-1">Least Productive</p>
+                <p className="mb-1 text-sm font-medium text-gray-900">Least Productive</p>
                 <p className="text-sm text-red-600">{analyticsData.timeTracking.leastProductiveHours}</p>
               </div>
             </div>

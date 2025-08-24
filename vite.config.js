@@ -20,5 +20,15 @@ export default defineConfig({
   },
   define: {
     'process.env.API_URL': JSON.stringify(process.env.API_URL || 'http://localhost:5000'),
+  },
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   }
 })

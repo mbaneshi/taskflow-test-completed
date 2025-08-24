@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNotification } from '../../contexts/NotificationContext';
+import { useNotifications } from '../../contexts/NotificationContext';
 import Button from './Button';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  const { showNotification } = useNotification();
+  const { addNotification } = useNotifications();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,10 +15,10 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      showNotification('Logged out successfully', 'success');
+      addNotification('Logged out successfully', 'success');
       navigate('/');
     } catch {
-      showNotification('Error logging out', 'error');
+      addNotification('Error logging out', 'error');
     }
   };
 

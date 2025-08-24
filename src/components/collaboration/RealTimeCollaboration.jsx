@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useWebSocket } from '../../hooks/useWebSocket';
+import useWebSocket from '../../hooks/useWebSocket';
 import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../common/Button';
+import Button from '../common/Button';
 
 const RealTimeCollaboration = () => {
   const { user } = useAuth();
