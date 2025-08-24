@@ -4,12 +4,12 @@
 
 All backend-frontend connection problems have been resolved:
 
-- **Backend Port**: Standardized to port 5000
+- **Backend Port**: Standardized to port 5001 (avoiding ControlCenter conflict)
 - **Frontend Port**: Running on port 3000  
 - **API URLs**: Correctly configured for local development
 - **Docker Ports**: Fixed container port mappings
 - **Caddy Proxy**: Correctly routes to container ports
-- **Database**: Proper initialization and connection setup
+- **Database**: MongoDB working with container IP (192.168.97.2:27017)
 
 ## 🚀 **Quick Start Commands**
 
