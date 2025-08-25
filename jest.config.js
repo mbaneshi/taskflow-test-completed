@@ -1,11 +1,7 @@
 /**
  * Jest Configuration for TaskFlow Application
  * 
- * Comprehensive testing configuration for MERN stack application.
- * Covers frontend React components, backend API endpoints, and database operations.
- * 
- * @author Senior Full-Stack Engineer
- * @version 1.0.0
+ * Minimal configuration optimized for ES modules
  */
 
 export default {
@@ -29,39 +25,17 @@ export default {
   
   // Setup files
   setupFilesAfterEnv: [
-    '<rootDir>/tests/setup/jest.setup.js'
+    '<rootDir>/tests/setup/jest.setup.mjs'
   ],
   
   // Coverage configuration
-  collectCoverage: false, // Disable coverage for now to avoid Babel issues
+  collectCoverage: false,
   
   // Test timeout
   testTimeout: 30000,
   
   // Verbose output
   verbose: true,
-  
-  // Clear mocks between tests
-  clearMocks: true,
-  
-  // Restore mocks between tests
-  restoreMocks: true,
-  
-  // Reset modules between tests
-  resetModules: false, // Changed to false to fix "module is already linked" error
-  
-  // Test environment options
-  testEnvironmentOptions: {
-    url: 'http://localhost:3000'
-  },
-  
-  // Module file extensions
-  moduleFileExtensions: [
-    'js',
-    'jsx',
-    'json',
-    'node'
-  ],
   
   // Module name mapping for file imports
   moduleNameMapper: {
