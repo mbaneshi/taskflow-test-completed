@@ -1,0 +1,31 @@
+# Vercel Environment Variables Configuration
+# Copy these variables to your Vercel dashboard
+
+# Database Configuration
+MONGODB_URI=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/taskflow
+
+# JWT Configuration
+JWT_SECRET=your-super-secure-production-jwt-secret-key
+
+# Application Configuration
+NODE_ENV=production
+PORT=3000
+
+# CORS Configuration
+CORS_ORIGIN=https://your-app-name.vercel.app
+
+# Security Settings
+BCRYPT_SALT_ROUNDS=12
+JWT_EXPIRES_IN=24h
+
+# Logging Configuration
+LOG_LEVEL=info
+DISABLE_LOGGING=false
+
+# Performance Settings
+ENABLE_CACHING=true
+ENABLE_COMPRESSION=true
+
+# API Configuration
+API_VERSION=v1
+API_PREFIX=/api
