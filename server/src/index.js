@@ -48,8 +48,12 @@ app.use(express.static(join(__dirname, '../../dist')));
 // Import database configuration
 import connectDB from '../config/database.js';
 
-// Database connection
-connectDB();
+// Database connection with error handling
+connectDB().catch(err => {
+  console.error('❌ Failed to connect to database:', err.message);
+  console.log('⚠️  Server will continue running without database connection');
+  console.log('💡 Check MongoDB container and connection settings');
+});
 
 // Logging middleware for all requests
 app.use(logUserActivity);
@@ -62,10 +66,17 @@ app.use('/api/logs', authenticateToken, logRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const dbStatus = dbState === 1 ? 'Connected' : 
+                   dbState === 2 ? 'Connecting' : 
+                   dbState === 3 ? 'Disconnecting' : 'Disconnected';
+  
   res.json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
-    database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
+    database: dbStatus,
+    databaseCode: dbState,
+    message: dbState === 1 ? 'Database connection established' : 'Database connection issues detected'
   });
 });
 

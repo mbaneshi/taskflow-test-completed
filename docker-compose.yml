@@ -10,13 +10,16 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: taskflow123
       MONGO_INITDB_DATABASE: taskflow
+    command: mongod --bind_ip_all --port 27017
     volumes:
       - mongodb_data:/data/db
       - ./docker/mongo/init:/docker-entrypoint-initdb.d
     ports:
       - "27017:27017"
-    networks:
-      - taskflow-network
+    # Use host network mode for reliable localhost access
+    network_mode: host
+    # networks:
+    #   - taskflow-network
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 30s
