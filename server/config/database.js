@@ -13,7 +13,7 @@ import mongoose from 'mongoose';
 const connectDB = async () => {
   try {
     // Use container IP for local development, fallback to environment variable
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://admin:taskflow123@192.168.97.2:27017/taskflow?authSource=admin';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://admin:taskflow123@localhost:27017/taskflow?authSource=admin';
     
     const options = {
       maxPoolSize: 10,
