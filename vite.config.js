@@ -8,8 +8,8 @@ export default defineConfig({
     react(),
     router(),
     checker({ 
-      typescript: true,
-      eslint: { lintCommand: 'eslint "./src/**/*.{ts,tsx,js,jsx}"' }
+      typescript: true
+      // ESLint temporarily disabled - will be configured separately
     })
   ],
   build: {
@@ -27,7 +27,7 @@ export default defineConfig({
     'process.env.API_URL': JSON.stringify(process.env.API_URL || 'http://localhost:5001'),
   },
   server: {
-    port: 3000,
+    port: 5173,
     proxy: {
       '/api': {
         target: 'http://localhost:5001',

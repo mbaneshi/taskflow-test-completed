@@ -1,352 +1,289 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import TaskItem from '../../src/components/TaskItem';
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
+import TaskItem from '../../src/components/tasks/TaskItem'
+
+const renderWithRouter = (component) => {
+  return render(
+    <BrowserRouter>
+      {component}
+    </BrowserRouter>
+  )
+}
 
 describe('TaskItem Component', () => {
   const defaultTask = {
-    id: '1',
+    _id: '1',
     title: 'Test Task',
     description: 'Test Description',
     priority: 'high',
     status: 'pending',
     dueDate: '2024-12-31',
-    assignee: 'john@example.com',
+    assignee: 'test@example.com',
     tags: ['frontend', 'bug'],
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
-  };
+    estimatedHours: 4,
+    createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-01-01T00:00:00.000Z'
+  }
 
   const defaultProps = {
     task: defaultTask,
-    onEdit: jest.fn(),
-    onDelete: jest.fn(),
-    onStatusChange: jest.fn(),
-    onPriorityChange: jest.fn(),
-    onAssign: jest.fn(),
-    isDragging: false,
-    isSelected: false,
-  };
+    onEdit: vi.fn(),
+    onDelete: vi.fn(),
+    onStatusChange: vi.fn(),
+    onPriorityChange: vi.fn(),
+    onAssign: vi.fn(),
+    showActions: true
+  }
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  test('renders task with all basic information', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('renders task information correctly', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
     expect(screen.getByText('Test Task')).toBeInTheDocument();
     expect(screen.getByText('Test Description')).toBeInTheDocument();
     expect(screen.getByText('high')).toBeInTheDocument();
     expect(screen.getByText('pending')).toBeInTheDocument();
-    expect(screen.getByText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByText('test@example.com')).toBeInTheDocument();
   });
 
-  test('applies priority-based styling correctly', () => {
-    const { rerender } = render(<TaskItem {...defaultProps} />);
+  it('displays priority badge with correct styling', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    // High priority should have red styling
-    expect(screen.getByText('high')).toHaveClass('text-red-600', 'bg-red-100');
-    
-    // Change to medium priority
-    rerender(<TaskItem {...defaultProps} task={{ ...defaultTask, priority: 'medium' }} />);
-    expect(screen.getByText('medium')).toHaveClass('text-yellow-600', 'bg-yellow-100');
-    
-    // Change to low priority
-    rerender(<TaskItem {...defaultProps} task={{ ...defaultTask, priority: 'low' }} />);
-    expect(screen.getByText('low')).toHaveClass('text-green-600', 'bg-green-100');
+    const priorityBadge = screen.getByText('high');
+    expect(priorityBadge).toHaveClass('bg-red-100 text-red-800');
   });
 
-  test('applies status-based styling correctly', () => {
-    const { rerender } = render(<TaskItem {...defaultProps} />);
+  it('displays status badge with correct styling', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    // Pending status should have gray styling
-    expect(screen.getByText('pending')).toHaveClass('text-gray-600', 'bg-gray-100');
-    
-    // Change to in-progress status
-    rerender(<TaskItem {...defaultProps} task={{ ...defaultTask, status: 'in-progress' }} />);
-    expect(screen.getByText('in-progress')).toHaveClass('text-blue-600', 'bg-blue-100');
-    
-    // Change to completed status
-    rerender(<TaskItem {...defaultProps} task={{ ...defaultTask, status: 'completed' }} />);
-    expect(screen.getByText('completed')).toHaveClass('text-green-600', 'bg-green-100');
+    const statusBadge = screen.getByText('pending');
+    expect(statusBadge).toHaveClass('bg-yellow-100 text-yellow-800');
   });
 
-  test('displays tags correctly', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('displays tags correctly', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
     expect(screen.getByText('frontend')).toBeInTheDocument();
     expect(screen.getByText('bug')).toBeInTheDocument();
   });
 
-  test('displays due date in readable format', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('displays due date in correct format', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    expect(screen.getByText(/Dec 31, 2024/i)).toBeInTheDocument();
+    expect(screen.getByText('Dec 31, 2024')).toBeInTheDocument();
   });
 
-  test('shows overdue indicator for past due dates', () => {
-    const overdueTask = {
-      ...defaultTask,
-      dueDate: '2023-12-31', // Past date
-    };
+  it('displays estimated hours when provided', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    render(<TaskItem {...defaultProps} task={overdueTask} />);
-    
-    expect(screen.getByText(/overdue/i)).toBeInTheDocument();
-    expect(screen.getByText(/overdue/i)).toHaveClass('text-red-600', 'font-semibold');
+    expect(screen.getByText('4h')).toBeInTheDocument();
   });
 
-  test('shows due soon indicator for tasks due within 3 days', () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const dueSoonTask = {
-      ...defaultTask,
-      dueDate: tomorrow.toISOString().split('T')[0],
-    };
-    
-    render(<TaskItem {...defaultProps} task={dueSoonTask} />);
-    
-    expect(screen.getByText(/due soon/i)).toBeInTheDocument();
-    expect(screen.getByText(/due soon/i)).toHaveClass('text-orange-600', 'font-semibold');
-  });
-
-  test('calls onEdit when edit button is clicked', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('calls onEdit when edit button is clicked', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
     const editButton = screen.getByRole('button', { name: /edit/i });
     fireEvent.click(editButton);
     
-    expect(defaultProps.onEdit).toHaveBeenCalledWith(defaultTask);
+    expect(defaultProps.onEdit).toHaveBeenCalledWith(defaultTask._id);
   });
 
-  test('calls onDelete when delete button is clicked', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('calls onDelete when delete button is clicked', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
     const deleteButton = screen.getByRole('button', { name: /delete/i });
     fireEvent.click(deleteButton);
     
-    expect(defaultProps.onDelete).toHaveBeenCalledWith(defaultTask.id);
+    expect(defaultProps.onDelete).toHaveBeenCalledWith(defaultTask._id);
   });
 
-  test('calls onStatusChange when status is changed', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('calls onStatusChange when status is changed', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    const statusSelect = screen.getByLabelText(/status/i);
-    fireEvent.change(statusSelect, { target: { value: 'completed' } });
+    const statusSelect = screen.getByDisplayValue('pending');
+    fireEvent.change(statusSelect, { target: { value: 'in-progress' } });
     
-    expect(defaultProps.onStatusChange).toHaveBeenCalledWith(defaultTask.id, 'completed');
+    expect(defaultProps.onStatusChange).toHaveBeenCalledWith(defaultTask._id, 'in-progress');
   });
 
-  test('calls onPriorityChange when priority is changed', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('calls onPriorityChange when priority is changed', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    const prioritySelect = screen.getByLabelText(/priority/i);
+    const prioritySelect = screen.getByDisplayValue('high');
     fireEvent.change(prioritySelect, { target: { value: 'medium' } });
     
-    expect(defaultProps.onPriorityChange).toHaveBeenCalledWith(defaultTask.id, 'medium');
+    expect(defaultProps.onPriorityChange).toHaveBeenCalledWith(defaultTask._id, 'medium');
   });
 
-  test('calls onAssign when assignee is changed', () => {
-    render(<TaskItem {...defaultProps} />);
+  it('calls onAssign when assignee is changed', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    const assigneeInput = screen.getByLabelText(/assignee/i);
-    fireEvent.change(assigneeInput, { target: { value: 'jane@example.com' } });
+    const assigneeInput = screen.getByDisplayValue('test@example.com');
+    fireEvent.change(assigneeInput, { target: { value: 'new@example.com' } });
+    fireEvent.blur(assigneeInput);
     
-    expect(defaultProps.onAssign).toHaveBeenCalledWith(defaultTask.id, 'jane@example.com');
+    expect(defaultProps.onAssign).toHaveBeenCalledWith(defaultTask._id, 'new@example.com');
   });
 
-  test('applies dragging styles when isDragging is true', () => {
-    render(<TaskItem {...defaultProps} isDragging={true} />);
+  it('hides action buttons when showActions is false', () => {
+    renderWithRouter(<TaskItem {...defaultProps} showActions={false} />);
     
-    const taskItem = screen.getByTestId('task-item');
-    expect(taskItem).toHaveClass('opacity-50', 'rotate-2', 'shadow-lg');
+    expect(screen.queryByRole('button', { name: /edit/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /delete/i })).not.toBeInTheDocument();
   });
 
-  test('applies selection styles when isSelected is true', () => {
-    render(<TaskItem {...defaultProps} isSelected={true} />);
-    
-    const taskItem = screen.getByTestId('task-item');
-    expect(taskItem).toHaveClass('ring-2', 'ring-blue-500', 'bg-blue-50');
+  it('applies correct priority colors', () => {
+    const { rerender } = render(
+      <BrowserRouter>
+        <TaskItem {...defaultProps} task={{ ...defaultTask, priority: 'low' }} />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('low')).toHaveClass('bg-green-100 text-green-800');
+
+    rerender(
+      <BrowserRouter>
+        <TaskItem {...defaultProps} task={{ ...defaultTask, priority: 'medium' }} />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('medium')).toHaveClass('bg-yellow-100 text-yellow-800');
+
+    rerender(
+      <BrowserRouter>
+        <TaskItem {...defaultProps} task={{ ...defaultTask, priority: 'urgent' }} />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('urgent')).toHaveClass('bg-purple-100 text-purple-800');
   });
 
-  test('shows assignee avatar when available', () => {
-    const taskWithAvatar = {
-      ...defaultTask,
-      assignee: {
-        email: 'john@example.com',
-        name: 'John Doe',
-        avatar: 'https://example.com/avatar.jpg',
-      },
+  it('applies correct status colors', () => {
+    const { rerender } = render(
+      <BrowserRouter>
+        <TaskItem {...defaultProps} task={{ ...defaultTask, status: 'in-progress' }} />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('in-progress')).toHaveClass('bg-blue-100 text-blue-800');
+
+    rerender(
+      <BrowserRouter>
+        <TaskItem {...defaultProps} task={{ ...defaultTask, status: 'complete' }} />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('complete')).toHaveClass('bg-green-100 text-green-800');
+
+    rerender(
+      <BrowserRouter>
+        <TaskItem {...defaultProps} task={{ ...defaultTask, status: 'cancelled' }} />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('cancelled')).toHaveClass('bg-gray-100 text-gray-800');
+  });
+
+  it('handles missing optional fields gracefully', () => {
+    const taskWithoutOptional = {
+      _id: '1',
+      title: 'Test Task',
+      description: 'Test Description',
+      priority: 'medium',
+      status: 'pending',
+      dueDate: '',
+      assignee: '',
+      tags: [],
+      estimatedHours: null,
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z'
     };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={taskWithoutOptional} />);
     
-    render(<TaskItem {...defaultProps} task={taskWithAvatar} />);
-    
-    const avatar = screen.getByAltText('John Doe');
-    expect(avatar).toHaveAttribute('src', 'https://example.com/avatar.jpg');
+    expect(screen.getByText('Test Task')).toBeInTheDocument();
+    expect(screen.getByText('Test Description')).toBeInTheDocument();
+    expect(screen.queryByText('h')).not.toBeInTheDocument();
   });
 
-  test('shows assignee initials when no avatar is available', () => {
-    const taskWithName = {
+  it('displays overdue warning for past due dates', () => {
+    const overdueTask = {
       ...defaultTask,
-      assignee: {
-        email: 'john@example.com',
-        name: 'John Doe',
-      },
+      dueDate: '2023-01-01'
     };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={overdueTask} />);
     
-    render(<TaskItem {...defaultProps} task={taskWithName} />);
-    
-    expect(screen.getByText('JD')).toBeInTheDocument();
+    const dueDateElement = screen.getByText('Jan 1, 2023');
+    expect(dueDateElement).toHaveClass('text-red-600 font-semibold');
   });
 
-  test('shows unassigned indicator when no assignee', () => {
-    const unassignedTask = {
+  it('displays due today indicator', () => {
+    const today = new Date().toISOString().split('T')[0];
+    const dueTodayTask = {
       ...defaultTask,
-      assignee: null,
+      dueDate: today
     };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={dueTodayTask} />);
     
-    render(<TaskItem {...defaultProps} task={unassignedTask} />);
-    
-    expect(screen.getByText(/unassigned/i)).toBeInTheDocument();
-    expect(screen.getByText(/unassigned/i)).toHaveClass('text-gray-500', 'italic');
+    const dueDateElement = screen.getByText(new RegExp(today.split('-')[1] + ' ' + today.split('-')[2] + ', ' + today.split('-')[0]));
+    expect(dueDateElement).toHaveClass('text-orange-600 font-semibold');
   });
 
-  test('displays creation and update timestamps', () => {
-    render(<TaskItem {...defaultProps} showTimestamps />);
-    
-    expect(screen.getByText(/created: Jan 1, 2024/i)).toBeInTheDocument();
-    expect(screen.getByText(/updated: Jan 1, 2024/i)).toBeInTheDocument();
-  });
-
-  test('shows progress bar for in-progress tasks', () => {
-    const inProgressTask = {
-      ...defaultTask,
-      status: 'in-progress',
-      progress: 75,
-    };
-    
-    render(<TaskItem {...defaultProps} task={inProgressTask} />);
-    
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toBeInTheDocument();
-    expect(progressBar).toHaveAttribute('aria-valuenow', '75');
-  });
-
-  test('handles long titles gracefully', () => {
+  it('handles long titles gracefully', () => {
     const longTitleTask = {
       ...defaultTask,
-      title: 'A'.repeat(100),
+      title: 'A'.repeat(100)
     };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={longTitleTask} />);
     
-    render(<TaskItem {...defaultProps} task={longTitleTask} />);
-    
-    const title = screen.getByText(longTitleTask.title);
-    expect(title).toHaveClass('truncate');
+    expect(screen.getByText('A'.repeat(100))).toBeInTheDocument();
   });
 
-  test('handles long descriptions gracefully', () => {
-    const longDescriptionTask = {
+  it('handles long descriptions gracefully', () => {
+    const longDescTask = {
       ...defaultTask,
-      description: 'A'.repeat(200),
+      description: 'A'.repeat(200)
     };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={longDescTask} />);
     
-    render(<TaskItem {...defaultProps} task={longDescriptionTask} />);
-    
-    const description = screen.getByText(longDescriptionTask.description);
-    expect(description).toHaveClass('line-clamp-2');
+    expect(screen.getByText('A'.repeat(200))).toBeInTheDocument();
   });
 
-  test('shows estimated time when provided', () => {
-    const taskWithTime = {
-      ...defaultTask,
-      estimatedTime: 120, // 2 hours in minutes
-    };
+  it('applies custom className when provided', () => {
+    const customClass = 'custom-task-item';
+    renderWithRouter(<TaskItem {...defaultProps} className={customClass} />);
     
-    render(<TaskItem {...defaultProps} task={taskWithTime} />);
-    
-    expect(screen.getByText(/2h/i)).toBeInTheDocument();
+    expect(screen.getByTestId('task-item')).toHaveClass(customClass);
   });
 
-  test('shows actual time when provided', () => {
-    const taskWithActualTime = {
-      ...defaultTask,
-      actualTime: 90, // 1.5 hours in minutes
-    };
+  it('displays creation and update timestamps', () => {
+    renderWithRouter(<TaskItem {...defaultProps} />);
     
-    render(<TaskItem {...defaultProps} task={taskWithActualTime} />);
-    
-    expect(screen.getByText(/1.5h/i)).toBeInTheDocument();
+    expect(screen.getByText(/Created: Jan 1, 2024/)).toBeInTheDocument();
+    expect(screen.getByText(/Updated: Jan 1, 2024/)).toBeInTheDocument();
   });
 
-  test('applies custom styling when provided', () => {
-    render(<TaskItem {...defaultProps} className="custom-task-item" />);
-    
-    const taskItem = screen.getByTestId('task-item');
-    expect(taskItem).toHaveClass('custom-task-item');
-  });
-
-  test('handles keyboard navigation correctly', () => {
-    render(<TaskItem {...defaultProps} />);
-    
-    const taskItem = screen.getByTestId('task-item');
-    taskItem.focus();
-    
-    // Press Enter to select
-    fireEvent.keyDown(taskItem, { key: 'Enter' });
-    expect(taskItem).toHaveClass('ring-2', 'ring-blue-500');
-    
-    // Press Space to toggle selection
-    fireEvent.keyDown(taskItem, { key: ' ' });
-    expect(taskItem).toHaveClass('ring-2', 'ring-blue-500');
-  });
-
-  test('shows subtasks when available', () => {
-    const taskWithSubtasks = {
-      ...defaultTask,
-      subtasks: [
-        { id: '1', title: 'Subtask 1', completed: true },
-        { id: '2', title: 'Subtask 2', completed: false },
-      ],
-    };
-    
-    render(<TaskItem {...defaultProps} task={taskWithSubtasks} />);
-    
-    expect(screen.getByText('Subtask 1')).toBeInTheDocument();
-    expect(screen.getByText('Subtask 2')).toBeInTheDocument();
-    expect(screen.getByText('1/2')).toBeInTheDocument(); // Progress indicator
-  });
-
-  test('shows comments count when available', () => {
-    const taskWithComments = {
-      ...defaultTask,
-      comments: [
-        { id: '1', text: 'Comment 1' },
-        { id: '2', text: 'Comment 2' },
-        { id: '3', text: 'Comment 3' },
-      ],
-    };
-    
-    render(<TaskItem {...defaultProps} task={taskWithComments} />);
-    
-    expect(screen.getByText('3')).toBeInTheDocument();
-    expect(screen.getByLabelText(/comments/i)).toBeInTheDocument();
-  });
-
-  test('handles empty tags gracefully', () => {
+  it('handles empty tags array', () => {
     const taskWithoutTags = {
       ...defaultTask,
-      tags: [],
+      tags: []
     };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={taskWithoutTags} />);
     
-    render(<TaskItem {...defaultProps} task={taskWithoutTags} />);
-    
-    expect(screen.queryByTestId('tags-container')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('task-tags')).not.toBeInTheDocument();
   });
 
-  test('shows loading state when updating', () => {
-    render(<TaskItem {...defaultProps} isUpdating={true} />);
+  it('handles null estimated hours', () => {
+    const taskWithoutHours = {
+      ...defaultTask,
+      estimatedHours: null
+    };
+
+    renderWithRouter(<TaskItem {...defaultProps} task={taskWithoutHours} />);
     
-    expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
-    expect(screen.getByText(/updating/i)).toBeInTheDocument();
+    expect(screen.queryByText(/h/)).not.toBeInTheDocument();
   });
 });

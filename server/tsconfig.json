@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "types": ["node", "jest"]
+    "types": ["node"]
   },
   "include": ["src/**/*", "config/**/*"],
   "exclude": ["node_modules", "dist"]

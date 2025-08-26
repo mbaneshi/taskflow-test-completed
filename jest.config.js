@@ -4,7 +4,7 @@
  * Minimal configuration optimized for ES modules
  */
 
-export default {
+module.exports = {
   // Test environment
   testEnvironment: 'jsdom',
   

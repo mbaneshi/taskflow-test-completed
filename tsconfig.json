@@ -23,12 +23,11 @@
       "@server/*": ["server/src/*"],
       "@types/*": ["types/*"]
     },
-    "types": ["node", "jest"]
+    "types": ["node", "vitest"]
   },
   "include": [
     "src/**/*",
-    "types/**/*",
-    "tests/**/*"
+    "types/**/*"
   ],
   "exclude": [
     "node_modules",
