@@ -17,6 +17,9 @@ interface LoginRequest {
   password: string
 }
 
+// Proper type for user ID
+type UserId = string
+
 const router = Router()
 
 /**
@@ -72,11 +75,12 @@ router.post('/register', async (
 
     await user.save()
 
-    // Generate token
-    const token = generateToken((user._id as any).toString())
+    // Generate token with proper type conversion
+    const userId: UserId = user._id.toString()
+    const token = generateToken(userId)
 
     // Log the registration
-    await logLogin(req, (user._id as any).toString(), 'user_registered')
+    await logLogin(req, userId, 'user_registered')
 
     res.status(201).json({
       success: true,
@@ -147,11 +151,12 @@ router.post('/login', async (
     // Update login information
     await user.updateLoginInfo()
 
-    // Generate token
-    const token = generateToken((user._id as any).toString())
+    // Generate token with proper type conversion
+    const userId: UserId = user._id.toString()
+    const token = generateToken(userId)
 
     // Log the login
-    await logLogin(req, (user._id as any).toString(), 'user_login')
+    await logLogin(req, userId, 'user_login')
 
     res.json({
       success: true,
