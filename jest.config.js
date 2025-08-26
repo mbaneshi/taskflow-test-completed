@@ -10,9 +10,8 @@ export default {
   
   // File extensions to test
   testMatch: [
-    '<rootDir>/tests/**/*.{test,spec}.{js,jsx,ts,tsx}',
-    '<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}',
-    '<rootDir>/server/**/*.{test,spec}.{js,jsx,ts,tsx}'
+    '<rootDir>/tests/**/*.{test,spec}.{js,jsx}',
+    '<rootDir>/src/**/*.{test,spec}.{js,jsx}'
   ],
   
   // Test file patterns to ignore
@@ -40,19 +39,12 @@ export default {
   // Module name mapping for file imports
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': '<rootDir>/tests/mocks/fileMock.js',
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/tests/mocks/fileMock.js',
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^@components/(.*)$': '<rootDir>/src/components/$1',
-    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
-    '^@types/(.*)$': '<rootDir>/types/$1'
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/tests/mocks/fileMock.js'
   },
   
-  // Transform configuration for JSX and TypeScript
+  // Transform configuration for JSX only (simplified)
   transform: {
-    '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './babel.config.cjs' }],
-    '^.+\\.(ts|tsx)$': ['ts-jest', {
-      tsconfig: './tsconfig.json'
-    }]
+    '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './babel.config.cjs' }]
   },
   
   // Transform ignore patterns

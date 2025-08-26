@@ -8,6 +8,7 @@ interface Notification {
   message: string
   type: NotificationType
   timestamp: Date
+  read: boolean
 }
 
 interface NotificationContextType {
@@ -15,6 +16,7 @@ interface NotificationContextType {
   addNotification: (message: string, type?: NotificationType) => void
   removeNotification: (id: string) => void
   clearNotifications: () => void
+  markAsRead: (id: string) => void
 }
 
 // Create the notification context
@@ -47,7 +49,8 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({ children })
       id,
       message,
       type,
-      timestamp: new Date()
+      timestamp: new Date(),
+      read: false
     }
     
     setNotifications((prev) => [...prev, newNotification])
@@ -66,11 +69,20 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({ children })
     setNotifications([])
   }
 
+  const markAsRead = (id: string): void => {
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === id ? { ...notif, read: true } : notif
+      )
+    )
+  }
+
   const value: NotificationContextType = {
     notifications,
     addNotification,
     removeNotification,
-    clearNotifications
+    clearNotifications,
+    markAsRead
   }
 
   return (

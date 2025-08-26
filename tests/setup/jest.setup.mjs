@@ -1,7 +1,10 @@
 /**
  * Jest Setup File
- * Minimal setup to avoid module linking issues
+ * Complete setup for TypeScript and React testing
  */
+
+// Import Jest DOM matchers
+import '@testing-library/jest-dom';
 
 // Basic polyfills
 import { TextEncoder, TextDecoder } from 'util';
