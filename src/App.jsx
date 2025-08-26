@@ -93,8 +93,8 @@ function App() {
             <PWAInstaller />
             <RealTimeCollaboration />
             <KeyboardShortcuts onShortcut={(action) => {
-              console.log('Keyboard shortcut executed:', action);
               // Handle different shortcut actions here
+              // TODO: Implement proper action handling
             }} />
           </div>
         </Router>

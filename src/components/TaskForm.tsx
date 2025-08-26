@@ -164,7 +164,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
       
       setErrors({})
     } catch (error) {
-      console.error('Form submission error:', error)
+      // Form submission error - could implement proper error logging here
+      setErrors({ general: 'Failed to submit form. Please try again.' })
     } finally {
       setIsSubmitting(false)
     }

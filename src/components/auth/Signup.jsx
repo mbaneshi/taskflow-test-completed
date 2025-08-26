@@ -217,15 +217,12 @@ const Signup = () => {
       existingLogs.push(logData);
       localStorage.setItem('userLogs', JSON.stringify(existingLogs));
       
-      console.log("User registration:", logData);
-      
       // Call the context signup method
       signup(formData.email, formData.password);
       
       // Navigate to the appropriate dashboard
       navigate(newUser.role === "admin" ? "/admin/dashboard" : "/user/dashboard");
     } catch (err) {
-      console.error("Registration error:", err);
       setError("Failed to create an account. Please try again.");
     } finally {
       setLoading(false);

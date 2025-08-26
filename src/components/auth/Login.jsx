@@ -107,8 +107,6 @@ const Login = () => {
         existingLogs.push(logData);
         localStorage.setItem('userLogs', JSON.stringify(existingLogs));
         
-        console.log("User login:", logData);
-        
         // Update authentication context
         login(email);
         
@@ -119,7 +117,6 @@ const Login = () => {
         setError("Invalid email or password");
       }
     } catch (err) {
-      console.error("Login error:", err);
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setLoading(false);

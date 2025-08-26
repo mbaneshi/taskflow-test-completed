@@ -75,7 +75,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           }
         }
       } catch (error) {
-        console.error("Authentication check failed:", error)
+        // Authentication check failed - log out user
         handleLogout()
       } finally {
         setLoading(false)

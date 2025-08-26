@@ -42,7 +42,6 @@ const PWAInstaller = () => {
     if ('serviceWorker' in navigator) {
       try {
         const registration = await navigator.serviceWorker.register('/sw.js');
-        console.log('Service Worker registered successfully:', registration);
 
         // Listen for updates
         registration.addEventListener('updatefound', () => {
@@ -57,12 +56,11 @@ const PWAInstaller = () => {
 
         // Listen for controller change
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          console.log('New service worker activated');
           window.location.reload();
         });
 
       } catch (error) {
-        console.error('Service Worker registration failed:', error);
+        // Service Worker registration failed - could implement proper error logging here
       }
     }
   };
@@ -72,7 +70,7 @@ const PWAInstaller = () => {
       try {
         await navigator.serviceWorker.controller.postMessage({ type: 'CHECK_UPDATE' });
       } catch (error) {
-        console.error('Error checking for updates:', error);
+        // Error checking for updates - could implement proper error logging here
       }
     }
   };
@@ -96,12 +94,6 @@ const PWAInstaller = () => {
     // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
 
-    if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
-    } else {
-      console.log('User dismissed the install prompt');
-    }
-
     // Clear the deferredPrompt
     setDeferredPrompt(null);
     setShowInstallButton(false);
@@ -111,7 +103,6 @@ const PWAInstaller = () => {
     if ('Notification' in window) {
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
-        console.log('Notification permission granted');
         // Subscribe to push notifications
         subscribeToPushNotifications();
       }
@@ -126,8 +117,6 @@ const PWAInstaller = () => {
           userVisibleOnly: true,
           applicationServerKey: process.env.REACT_APP_VAPID_PUBLIC_KEY
         });
-
-        console.log('Push notification subscription:', subscription);
         
         // Send subscription to server
         await fetch('/api/notifications/subscribe', {
@@ -139,7 +128,7 @@ const PWAInstaller = () => {
         });
 
       } catch (error) {
-        console.error('Error subscribing to push notifications:', error);
+        // Error subscribing to push notifications - could implement proper error logging here
       }
     }
   };

@@ -243,8 +243,7 @@ const TaskList = () => {
         month: 'short',
         day: 'numeric'
       });
-    } catch (err) {
-      console.error('Date formatting error:', err);
+    } catch {
       return 'Invalid date';
     }
   };

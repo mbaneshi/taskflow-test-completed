@@ -78,13 +78,13 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
 
   return (
     <nav className={`${baseClasses} ${scrolledClasses} ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">T</span>
+              <div className="flex justify-center items-center w-8 h-8 bg-blue-600 rounded-lg">
+                <span className="text-lg font-bold text-white">T</span>
               </div>
               <span className="text-xl font-bold text-gray-900">TaskFlow</span>
             </Link>
@@ -92,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <div className="flex items-baseline ml-10 space-x-4">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
@@ -110,17 +110,17 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
           </div>
 
           {/* Right side - User menu and notifications */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden items-center space-x-4 md:flex">
             {/* Notifications */}
             <div className="relative">
               <button
-                className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors relative"
+                className="relative p-2 text-gray-600 rounded-lg transition-colors hover:text-blue-600 hover:bg-blue-50"
                 title="Notifications"
                 aria-label="Notifications"
               >
                 <FaBell />
                 {unreadNotifications > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="flex absolute -top-1 -right-1 justify-center items-center w-5 h-5 text-xs text-white bg-red-500 rounded-full">
                     {unreadNotifications > 9 ? '9+' : unreadNotifications}
                   </span>
                 )}
@@ -131,18 +131,18 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
             <div className="relative user-menu">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                className="flex items-center p-2 space-x-2 text-gray-700 rounded-lg transition-colors hover:text-blue-600 hover:bg-blue-50"
                 aria-expanded={isUserMenuOpen ? 'true' : 'false'}
                 aria-haspopup="true"
               >
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <FaUser className="text-white text-sm" />
+                <div className="flex justify-center items-center w-8 h-8 bg-blue-600 rounded-full">
+                  <FaUser className="text-sm text-white" />
                 </div>
                 <span className="text-sm font-medium">{user?.username || 'User'}</span>
               </button>
 
               {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                <div className="absolute right-0 z-50 py-1 mt-2 w-48 bg-white rounded-md border border-gray-200 shadow-lg">
                   <Link
                     to="/profile"
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -159,7 +159,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                    className="flex items-center px-4 py-2 w-full text-sm text-left text-gray-700 hover:bg-gray-100"
                   >
                     <FaSignOutAlt className="mr-3 text-gray-400" />
                     Sign Out
@@ -173,7 +173,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-2 text-gray-600 rounded-lg transition-colors hover:text-blue-600 hover:bg-blue-50"
               aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
               aria-label="Toggle mobile menu"
             >
@@ -185,7 +185,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden navbar-menu bg-white border-t border-gray-200">
+        <div className="bg-white border-t border-gray-200 md:hidden navbar-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => (
               <Link
@@ -204,8 +204,8 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
             {/* Mobile user menu */}
             <div className="pt-4 border-t border-gray-200">
               <div className="flex items-center px-3 py-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <FaUser className="text-white text-sm" />
+                <div className="flex justify-center items-center w-8 h-8 bg-blue-600 rounded-full">
+                  <FaUser className="text-sm text-white" />
                 </div>
                 <span className="ml-3 text-base font-medium text-gray-700">
                   {user?.username || 'User'}
@@ -214,21 +214,21 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
               
               <Link
                 to="/profile"
-                className="block px-3 py-2 text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md"
+                className="block px-3 py-2 text-base text-gray-700 rounded-md hover:text-blue-600 hover:bg-blue-50"
               >
                 Profile
               </Link>
               
               <Link
                 to="/settings"
-                className="block px-3 py-2 text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md"
+                className="block px-3 py-2 text-base text-gray-700 rounded-md hover:text-blue-600 hover:bg-blue-50"
               >
                 Settings
               </Link>
               
               <button
                 onClick={handleLogout}
-                className="block w-full text-left px-3 py-2 text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md"
+                className="block px-3 py-2 w-full text-base text-left text-gray-700 rounded-md hover:text-blue-600 hover:bg-blue-50"
               >
                 Sign Out
               </button>

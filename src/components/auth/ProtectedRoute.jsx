@@ -32,13 +32,6 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   const location = useLocation();
   
   /**
-   * Effect to log route access attempts for debugging
-   */
-  useEffect(() => {
-    console.log(`Route access attempt: ${location.pathname}`);
-  }, [location.pathname]);
-
-  /**
    * Check if user is authenticated using both context and localStorage
    * This dual-check approach ensures reliability across page refreshes
    */
@@ -46,7 +39,6 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   
   // If not authenticated, redirect to login with return path
   if (!isAuthenticated) {
-    console.log(`Authentication required for: ${location.pathname}`);
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
   
@@ -60,8 +52,6 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     const hasRequiredRole = hasRole ? hasRole(requiredRole) : userRole === requiredRole;
     
     if (!hasRequiredRole) {
-      console.log(`Role ${requiredRole} required for: ${location.pathname}`);
-      
       // Redirect to appropriate dashboard based on user's role
       const redirectPath = userRole === "admin" ? "/admin/dashboard" : "/user/dashboard";
       
