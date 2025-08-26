@@ -140,7 +140,7 @@ export const logUserAction = async (
   req: Request,
   userId: string,
   action: string,
-  details: Record<string, any> = {}
+  details: Record<string, unknown> = {}
 ): Promise<void> => {
   try {
     const ipAddress = req.ip || 
@@ -174,7 +174,7 @@ export const logUserAction = async (
 export const logSystemActivity = async (
   req: Request,
   action: string,
-  details: Record<string, any> = {}
+  details: Record<string, unknown> = {}
 ): Promise<void> => {
   try {
     const ipAddress = req.ip || 
@@ -184,7 +184,7 @@ export const logSystemActivity = async (
     const userAgent = req.get('User-Agent')
 
     await UserLog.create({
-      userId: null as any, // System activity has no user
+      userId: null, // System activity has no user
       action,
       details: {
         ...details,

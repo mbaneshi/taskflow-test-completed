@@ -51,11 +51,12 @@ services:
       dockerfile: Dockerfile
     container_name: taskflow-backend
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
       MONGODB_URI: mongodb://admin:taskflow123@mongodb:27017/taskflow?authSource=admin
       REDIS_URL: redis://redis:6379
-      JWT_SECRET: your-super-secret-jwt-key-change-in-production
       PORT: 5001
     volumes:
       - ./server/uploads:/app/uploads
@@ -70,7 +71,7 @@ services:
     networks:
       - taskflow-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -4,7 +4,7 @@ import mongoose, { Schema, Document } from 'mongoose'
 interface IUserLog extends Document {
   userId: mongoose.Types.ObjectId
   action: string
-  details: Record<string, any>
+  details: Record<string, unknown>
   ipAddress?: string
   userAgent?: string
   timestamp: Date

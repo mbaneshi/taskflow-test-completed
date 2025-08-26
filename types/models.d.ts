@@ -72,14 +72,14 @@ export interface IComment {
 export interface IUserLog extends BaseDocument {
   userId: Types.ObjectId | IUser
   action: string
-  details: Record<string, any>
+  details: Record<string, unknown>
   ipAddress?: string
   userAgent?: string
   timestamp: Date
 }
 
 // API Response interfaces
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string

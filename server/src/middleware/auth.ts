@@ -12,7 +12,7 @@ interface IUser {
   isActive: boolean
 }
 
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
@@ -77,9 +77,9 @@ export const authenticateToken = async (
       return
     }
     
-    // Attach user to request
+    // Attach user to request with proper type conversion
     (req as AuthenticatedRequest).user = {
-      _id: (user._id as any).toString(),
+      _id: user._id.toString(),
       username: user.username,
       email: user.email,
       role: user.role,

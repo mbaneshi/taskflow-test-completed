@@ -49,7 +49,7 @@ router.get('/', async (
     } = req.query
     
     // Build filter object
-    const filter: Record<string, any> = {}
+    const filter: Record<string, unknown> = {}
     
     // Status filter
     if (status && status !== 'all') {
